@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Close Cockpit</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js Setup -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">SAP Fiori</div>
+            <div class="title">Financial Close Cockpit</div>
+            <div class="user-profile">
+                <div class="avatar">VA</div>
+                <span>Vinayak Associate</span>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <!-- Sidebar Navigation -->
+            <nav class="app-sidebar">
+                <ul>
+                    <li class="active" data-view="dashboard">Dashboard</li>
+                    <li data-view="tasks">Close Tasks</li>
+                    <li data-view="approvals">JE Approvals</li>
+                    <li data-view="bank">Bank Status</li>
+                    <li data-view="analytics">Analytics</li>
+                </ul>
+            </nav>
+
+            <!-- Main Application Canvas -->
+            <main class="app-main">
+                
+                <!-- Dashboard (Cockpit Overview) -->
+                <section id="view-dashboard" class="view active">
+                    <div class="page-title">
+                        <h2>Cockpit Overview</h2>
+                        <div class="progress-container">
+                            <span>Close Cycle Progress</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                            <span>75%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-grid" id="kpi-container">
+                        <!-- KPI Cards rendered by JS -->
+                    </div>
+                    
+                    <div class="mobile-status-view">
+                        <h3>Mobile Status View (Responsive)</h3>
+                        <div class="period-selector">
+                            <label>Period:</label>
+                            <select>
+                                <option>P12 (March 2024)</option>
+                                <option>P11 (February 2024)</option>
+                            </select>
+                        </div>
+                        <div class="mobile-cards" id="mobile-cards-container">
+                            <!-- Mobile cards rendered via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Task Management View -->
+                <section id="view-tasks" class="view">
+                    <h2>Close Task Management</h2>
+                    <div class="toolbar">
+                        <label>Filter by Phase:</label>
+                        <select id="phase-filter">
+                            <option value="All">All Phases</option>
+                            <option value="Pre-Close">Pre-Close</option>
+                            <option value="FI Sub-Ledger">FI Sub-Ledger</option>
+                            <option value="CO Close">CO Close</option>
+                            <option value="GL Close">GL Close</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="fiori-table">
+                            <thead>
+                                <tr>
+                                    <th>Task ID</th>
+                                    <th>Task Name</th>
+                                    <th>Phase</th>
+                                    <th>Responsible</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="task-table-body">
+                                <!-- Tasks rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- JE Approvals Workflow Simulation View -->
+                <section id="view-approvals" class="view">
+                    <h2>Journal Entry Approval Simulation</h2>
+                    <div class="fiori-card je-simulation">
+                        <h3>Create Manual JE</h3>
+                        <form id="je-form">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" id="je-desc" placeholder="e.g., Accrual for Consulting Services" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount (INR)</label>
+                                <input type="number" id="je-amount" placeholder="e.g., 150000" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Post JE</button>
+                        </form>
+                        <div id="je-message" class="message"></div>
+                        
+                        <div class="approval-queue" style="display: none;" id="approval-queue">
+                            <h4>Workflow Inbox: Pending Approvals</h4>
+                            <div class="approval-card">
+                                <div>
+                                    <strong>Document:</strong> <span id="pending-desc"></span><br>
+                                    <strong>Amount:</strong> INR <span id="pending-amount"></span>
+                                </div>
+                                <div>
+                                    <button class="btn-success" id="btn-approve">Approve</button>
+                                    <button class="btn-danger" id="btn-reject">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bank Sync View -->
+                <section id="view-bank" class="view">
+                    <h2>Bank Synchronization Status</h2>
+                    <div class="fiori-card bank-panel">
+                        <div class="bank-details">
+                            <h3>SBI Corporate API</h3>
+                            <p><strong>Last Sync:</strong> <span id="bank-sync-time">2026-04-21 08:00:00 IST</span></p>
+                            <p><strong>Status:</strong> <span id="bank-status-badge" class="badge success">Success</span></p>
+                        </div>
+                        <button class="btn-primary" id="btn-fetch-bank">Fetch Bank Data (MT940)</button>
+                    </div>
+                </section>
+
+                <!-- Analytics Dashboard View -->
+                <section id="view-analytics" class="view">
+                    <h2>Analytics Dashboard</h2>
+                    <div class="charts-grid">
+                        <div class="fiori-card chart-card">
+                            <h3>Tasks Completed vs Pending</h3>
+                            <canvas id="tasksChart"></canvas>
+                        </div>
+                        <div class="fiori-card chart-card">
+                            <h3>Days to Close Trend</h3>
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal Backdrop -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Task Details</h3>
+                <span class="close-btn" id="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Description:</strong> <span id="modal-desc"></span></p>
+                <p><strong>SAP T-Code:</strong> <span id="modal-tcode"></span></p>
+                <p><strong>Role:</strong> <span id="modal-role"></span></p>
+                <p><strong>Timeline:</strong> <span id="modal-timeline"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="btn-complete-task">Mark as Completed</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification-popup" class="notification hidden">
+        Overdue tasks detected! Please review the close task management.
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,508 @@
+/* SAP Fiori Theme CSS Variables */
+:root {
+    --sap-blue: #0a6ed1;
+    --sap-dark-blue: #0854a0;
+    --sap-header-bg: #354a5f;
+    --sap-bg: #f2f2f2;
+    --sap-card-bg: #ffffff;
+    --sap-text: #32363a;
+    --sap-border: #d9d9d9;
+    --sap-green: #2b7c2b;
+    --sap-red: #bb0000;
+    --sap-amber: #e9730c;
+    --sap-hover: #e5f0fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+body {
+    background-color: var(--sap-bg);
+    color: var(--sap-text);
+    overflow: hidden;
+}
+
+/* App Shell Layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-header {
+    background-color: var(--sap-header-bg);
+    color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.app-header .logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.app-header .title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    background-color: var(--sap-blue);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.app-sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid var(--sap-border);
+    padding: 20px 0;
+}
+
+.app-sidebar ul {
+    list-style: none;
+}
+
+.app-sidebar li {
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+}
+
+.app-sidebar li:hover {
+    background-color: var(--sap-hover);
+}
+
+.app-sidebar li.active {
+    background-color: var(--sap-hover);
+    border-left-color: var(--sap-blue);
+    font-weight: 500;
+    color: var(--sap-blue);
+}
+
+.app-main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Navigation Views */
+.view {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--sap-text);
+    font-weight: 400;
+}
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Progress Mechanism */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 10px;
+    background-color: var(--sap-border);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--sap-blue);
+    transition: width 0.5s ease;
+}
+
+/* Generalized Cards styling */
+.fiori-card {
+    background: var(--sap-card-bg);
+    border: 1px solid var(--sap-border);
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+}
+
+.fiori-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Dashboard KPIs Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kpi-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-title {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+/* Status Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.success { background-color: #e5f6e5; color: var(--sap-green); border: 1px solid var(--sap-green); }
+.badge.warning { background-color: #fdf3e8; color: var(--sap-amber); border: 1px solid var(--sap-amber); }
+.badge.error { background-color: #fbecec; color: var(--sap-red); border: 1px solid var(--sap-red); }
+.badge.info { background-color: #e5f0fa; color: var(--sap-blue); border: 1px solid var(--sap-blue); }
+
+/* Buttons */
+.btn-primary, .btn-success, .btn-danger {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-primary { background-color: var(--sap-blue); color: white; }
+.btn-primary:hover { background-color: var(--sap-dark-blue); }
+.btn-success { background-color: var(--sap-green); color: white; }
+.btn-danger { background-color: var(--sap-red); color: white; }
+
+/* Table Structure */
+.toolbar {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.toolbar select, .form-group input {
+    padding: 8px;
+    border: 1px solid var(--sap-border);
+    border-radius: 4px;
+    outline: none;
+}
+
+.table-container {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow-x: auto;
+}
+
+.fiori-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.fiori-table th, .fiori-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--sap-border);
+    font-size: 0.95rem;
+}
+
+.fiori-table th {
+    background-color: #f9f9f9;
+    font-weight: 500;
+    color: #666;
+}
+
+.fiori-table tr:hover {
+    background-color: var(--sap-hover);
+}
+
+.fiori-table tr.overdue {
+    background-color: #fbecec;
+}
+
+/* Action Links */
+.action-link {
+    color: var(--sap-blue);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+/* Modal Windows */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: 400px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--sap-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--sap-border);
+    text-align: right;
+    background: #f9f9f9;
+}
+
+.close-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Workflow Form Features */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.je-simulation {
+    max-width: 500px;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+    font-size: 0.9rem;
+}
+
+.message.error {
+    background: #fbecec;
+    border: 1px solid var(--sap-red);
+    color: var(--sap-red);
+}
+
+.message.success {
+    background: #e5f6e5;
+    border: 1px solid var(--sap-green);
+    color: var(--sap-green);
+}
+
+.approval-queue {
+    margin-top: 20px;
+    border-top: 1px solid var(--sap-border);
+    padding-top: 20px;
+}
+
+.approval-card {
+    background: #f9f9f9;
+    border: 1px solid var(--sap-border);
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Bank Panel Section */
+.bank-panel {
+    max-width: 400px;
+}
+
+.bank-details {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Mobile-like Responsive Blocks */
+.mobile-status-view {
+    margin-top: 40px;
+    border-top: 1px solid var(--sap-border);
+    padding-top: 20px;
+}
+
+.period-selector {
+    margin-bottom: 15px;
+}
+
+.mobile-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.mobile-card {
+    background: white;
+    border: 1px solid var(--sap-border);
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.mobile-card h4 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+/* Alert notifications bottom right */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--sap-red);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: opacity 0.3s;
+}
+
+.notification.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Responsive Behaviour */
+@media (max-width: 768px) {
+    .app-body {
+        flex-direction: column;
+    }
+    .app-sidebar {
+        width: 100%;
+        height: auto;
+        display: flex;
+        overflow-x: auto;
+        padding: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--sap-border);
+    }
+    .app-sidebar ul {
+        display: flex;
+    }
+    .app-sidebar li {
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        white-space: nowrap;
+    }
+    .app-sidebar li.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--sap-blue);
+    }
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
